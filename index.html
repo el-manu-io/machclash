@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Flugzeug-Quartett 1935–2026</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <header class="hud">
+    <h1>✈️ Luftfahrt-Quartett Testdeck</h1>
+    <div class="scoreboard">
+      <span>Du: <strong id="player-count">16</strong></span>
+      <span>Pot: <strong id="pot-count">0</strong></span>
+      <span>CPU: <strong id="opponent-count">16</strong></span>
+    </div>
+    <p id="status-msg" class="status">Du bist am Zug – wähle einen Wert!</p>
+    <!-- Compact CPU Reveal Banner for Mobile -->
+    <div id="vs-banner" class="vs-banner" hidden></div>
+  </header>
+
+  <main class="arena">
+    <!-- Karte des Spielers -->
+    <section class="slot">
+      <h2>Deine Karte</h2>
+      <div id="player-card-container"></div>
+    </section>
+
+    <!-- Karte des Gegners (Bot) -->
+    <section class="slot">
+      <h2>Gegner (CPU)</h2>
+      <div id="opponent-card-container" class="card-hidden"></div>
+    </section>
+  </main>
+
+  <footer class="controls">
+    <button id="next-round-btn" hidden>Nächste Runde ▶</button>
+    <button id="stats-btn">Balancing-Statistik (Konsole)</button>
+  </footer>
+
+  <script type="module" src="ui.js"></script>
+</body>
+</html>
