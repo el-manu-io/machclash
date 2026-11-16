@@ -1,43 +1,56 @@
 <!DOCTYPE html>
-<html lang="de">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Flugzeug-Quartett 1935–2026</title>
-  <link rel="stylesheet" href="style.css" />
+  <title>MachCrash</title>
+  <meta name="theme-color" content="#0f2537" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="MachCrash" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="static/icons/favicon.png" sizes="32x32" type="image/png" />
+  <link rel="apple-touch-icon" href="static/icons/apple-touch-icon.png" />
+  <link rel="stylesheet" href="static/style.css" />
 </head>
 <body>
-    <header class="hud">
-    <h1>✈️ Luftfahrt-Quartett Testdeck</h1>
+  <header class="hud">
     <div class="scoreboard">
-      <span>Du: <strong id="player-count">16</strong></span>
+      <span>You: <strong id="player-count">16</strong></span>
       <span>Pot: <strong id="pot-count">0</strong></span>
       <span>CPU: <strong id="opponent-count">16</strong></span>
     </div>
-    <p id="status-msg" class="status">Du bist am Zug – wähle einen Wert!</p>
-    <!-- Compact CPU Reveal Banner for Mobile -->
-    <div id="vs-banner" class="vs-banner" hidden></div>
+    <p id="status-msg" class="status">Your turn – pick a category!</p>
   </header>
 
   <main class="arena">
-    <!-- Karte des Spielers -->
-    <section class="slot">
-      <h2>Deine Karte</h2>
-      <div id="player-card-container"></div>
-    </section>
+    <div class="slots">
+      <section class="slot">
+        <div id="player-card-container"></div>
+      </section>
 
-    <!-- Karte des Gegners (Bot) -->
-    <section class="slot">
-      <h2>Gegner (CPU)</h2>
-      <div id="opponent-card-container" class="card-hidden"></div>
-    </section>
+      <section class="slot">
+        <div id="opponent-card-container" class="card-hidden"></div>
+      </section>
+    </div>
   </main>
 
-  <footer class="controls">
-    <button id="next-round-btn" hidden>Nächste Runde ▶</button>
-    <button id="stats-btn">Balancing-Statistik (Konsole)</button>
+  <footer>
+    <nav class="controls">
+      <button id="next-round-btn" hidden>Next round ▶</button>
+      <button id="stats-btn">Balancing stats (console)</button>
+    </nav>
   </footer>
 
-  <script type="module" src="ui.js"></script>
+  <div id="rotate-overlay" class="rotate-overlay">
+    <p>Please rotate your device</p>
+  </div>
+
+  <div id="game-overlay" class="game-overlay">
+    <p id="game-overlay-msg"></p>
+    <button type="button" id="try-again-btn">Play again</button>
+  </div>
+
+  <script type="module" src="libs/ui.js"></script>
 </body>
 </html>

@@ -1,0 +1,444 @@
+:root {
+  --card-width: 223px;
+  --card-height: 344px;
+  --inline-pad: 5px;
+  --fold: max(0px, calc((var(--card-width) * 2 - (100vw - 2 * var(--inline-pad))) / 2));
+  --slots-scale: 1;
+  --navy: #0f2537;
+  --sky: #1e5f8a;
+  --accent: #e67e22;
+  --bg-light: #f4f7f9;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  width: 100%;
+  min-width: 320px;
+  min-height: 420px;
+  height: 100%;
+}
+
+body {
+  background: #e2e8f0;
+  color: #1e293b;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
+}
+
+body > header { flex-shrink: 0; flex-grow: 0; position: relative; width: 100%; height: 15px; }
+body > main { flex-shrink: 0; flex-grow: 0; position: relative; min-height: 0; }
+body > footer { flex-shrink: 0; flex-grow: 0; position: relative; width: 100%; height: 15px; }
+
+/* Top HUD & Scoreboard */
+.hud {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
+.hud h1 {
+  font-size: 1.15rem;
+  margin-bottom: 6px;
+}
+
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  font-size: 0.9rem;
+  background: #ffffff;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  margin: 0 auto 0;
+  width: fit-content;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 555;
+  background-color: #fffd;
+  height: 30px;
+  align-items: center;
+}
+
+.scoreboard > span:first-child + span { display: none; }
+
+.status {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--sky);
+  min-height: 1.4em;
+}
+
+#status-msg { display: none; }
+
+/* Compact CPU Reveal Banner */
+.vs-banner {
+  background: var(--navy);
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 10px;
+  margin: 6px auto 0;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 0.85rem;
+  border-left: 4px solid var(--accent);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.vs-banner.player {
+  border-left-color: #22c55e;
+}
+
+.vs-banner.opponent {
+  border-left-color: #ef4444;
+}
+
+.vs-stat {
+  font-size: 0.95rem;
+  color: #93c5fd;
+}
+
+/* Desktop Arena Layout */
+.arena {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: hidden;
+  padding-left: var(--inline-pad);
+  padding-right: var(--inline-pad);
+}
+
+.slots {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: calc(var(--card-width) * 2);
+  transform: scale(var(--slots-scale));
+  transform-origin: center center;
+}
+
+.slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.slot h2 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+  color: #475569;
+}
+
+#player-card-container,
+#opponent-card-container {
+  position: relative;
+  height: var(--card-height);
+  z-index: 110;
+}
+
+#player-card-container.card-on-top,
+#opponent-card-container.card-on-top {
+  z-index: 120;
+}
+
+#player-card-container .quartett-card {
+  position: absolute;
+  right: calc(var(--fold) * -1);
+}
+
+#opponent-card-container .quartett-card {
+  position: absolute;
+  left: calc(var(--fold) * -1);
+}
+
+
+/* ==========================================
+   QUARTETT CARD (Exact 59 mm x 91 mm Ratio)
+   ========================================== */
+.quartett-card {
+  width: var(--card-width);
+  height: var(--card-height);
+  background: #ffffff;
+  border: 1.5mm solid var(--navy);
+  border-radius: 3.5mm;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.18);
+  /*transform: scale(1.3);
+  transform-origin: top center;*/
+  margin-bottom: 30mm;
+}
+
+.card-header {
+  background: var(--navy);
+  color: #ffffff;
+  padding: 1.8mm 2.5mm;
+  display: flex;
+  align-items: center;
+  gap: 2mm;
+}
+
+.card-id {
+  background: var(--accent);
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 3.4mm;
+  padding: 0.6mm 1.6mm;
+  border-radius: 1mm;
+  flex-shrink: 0;
+}
+
+.card-title-wrap {
+  overflow: hidden;
+  text-align: left;
+}
+
+.card-group {
+  font-size: 2mm;
+  text-transform: uppercase;
+  letter-spacing: 0.2mm;
+  color: #93c5fd;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-name {
+  font-size: 2.9mm;
+  font-weight: 700;
+  line-height: 1.15;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-image {
+  height: 25mm;
+  border-bottom: 0.6mm solid var(--navy);
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.card-stats {
+  list-style: none;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 1mm 0;
+  background: var(--bg-light);
+}
+
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8mm 2.5mm;
+  font-size: 2.55mm;
+  border-bottom: 0.2mm solid #e2e8f0;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.stat-row:last-child {
+  border-bottom: none;
+}
+
+.stat-row:active,
+.stat-row:hover {
+  background: #dbeafe;
+}
+
+.stat-row.active-win {
+  background: #86efac;
+  font-weight: 800;
+}
+
+.stat-row.active-lose {
+  background: #fca5a5;
+}
+
+.stat-label {
+  display: flex;
+  align-items: center;
+  gap: 1mm;
+  color: #334155;
+}
+
+.rule-badge {
+  font-size: 2mm;
+  font-weight: 700;
+  color: var(--sky);
+}
+
+.stat-value {
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: #0f172a;
+}
+
+/* Face-down CPU Card (Desktop) */
+.card-hidden .quartett-card {
+  background: var(--navy);
+  justify-content: center;
+  align-items: center;
+  color: #ffffff;
+}
+
+.card-hidden .card-header,
+.card-hidden .card-image,
+.card-hidden .card-stats {
+  display: none;
+}
+
+.card-hidden .quartett-card::after {
+  content: '✈️\A AVIATION\A QUARTETT';
+  white-space: pre;
+  text-align: center;
+  font-weight: 800;
+  font-size: 4.5mm;
+  letter-spacing: 0.4mm;
+  color: #93c5fd;
+}
+
+/* Bottom Controls */
+nav.controls {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 30px;
+  border: 0;
+  z-index: 555;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 10px;
+  border-width: 2px;
+  border-color: #e67e22dd;
+  border-style: solid;
+  background-color: #e67e22dd;
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+button:focus,
+button:focus-visible {
+  outline: none;
+  border-color: #fff;
+}
+
+#stats-btn {
+  background: #64748b;
+  flex: 0.6;
+  font-size: 0.8rem;
+  display: none;
+}
+
+.rotate-overlay,
+.game-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  background: var(--navy);
+  color: #ffffff;
+  text-align: center;
+  padding: 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.game-overlay.is-open {
+  display: flex;
+}
+
+.game-overlay #try-again-btn {
+  flex: none;
+  background: var(--accent);
+  padding: 0.75rem 1.5rem;
+  border-radius: 10px;
+  font-size: 1rem;
+}
+
+@media (max-height: 419px) and (min-width: 460px) {
+  .rotate-overlay {
+    display: flex;
+  }
+}
+
+
+/* ==========================================
+   MOBILE OPTIMIZATION (< 768px) — ZERO JUMP
+   ========================================== */
+/*
+@media (max-width: 768px) {
+  body {
+    padding: 8px 10px 14px;
+    overflow-x: hidden;
+  }
+
+  .hud h1 {
+    display: none;
+  }
+
+  .arena .slot:nth-child(2) {
+    display: none;
+  }
+
+  .quartett-card {
+    transform: scale(1.22);
+    transform-origin: top center;
+    margin-bottom: 22mm;
+  }
+
+  .controls {
+    position: sticky;
+    bottom: 10px;
+    z-index: 20;
+  }
+}
+*/
