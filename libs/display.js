@@ -1,13 +1,12 @@
 export class Display {
-  constructor(arena, slots, { maxScale = 1.5 } = {}) {
+  constructor(arena, slots, { maxScale = 2.0, minPeek = 25 } = {}) {
     this.arena = arena;
     this.slots = slots;
     this.maxScale = maxScale;
-    this.header = document.querySelector('body > header');
-    this.footer = document.querySelector('body > footer');
+    this.minPeek = minPeek;
 
     this.observer = new ResizeObserver(() => this.update());
-    this.observer.observe(document.body);
+    this.observer.observe(this.arena);
     window.addEventListener('resize', () => this.update());
     this.update();
   }
@@ -17,23 +16,31 @@ export class Display {
     const baseHeight = this.slots.offsetHeight;
     if (!baseWidth || !baseHeight) return;
 
-    const headerH = this.header?.offsetHeight ?? 0;
-    const footerH = this.footer?.offsetHeight ?? 0;
     const arenaStyles = getComputedStyle(this.arena);
     const padX = parseFloat(arenaStyles.paddingLeft) + parseFloat(arenaStyles.paddingRight);
-    const availW = this.arena.clientWidth - padX;
-    const availH = window.innerHeight - headerH - footerH;
+    const padY = parseFloat(arenaStyles.paddingTop) + parseFloat(arenaStyles.paddingBottom);
+    const availW = Math.max(0, this.arena.clientWidth - padX);
+    const availH = Math.max(0, this.arena.clientHeight - padY);
+    if (!availW || !availH) return;
 
-    const heightScale = availH / baseHeight;
-    const widthScale = availW / baseWidth;
+    const cardWidth = parseFloat(getComputedStyle(this.slots).getPropertyValue('--card-width')) || (baseWidth / 2);
+    const maxFold = Math.max(0, (cardWidth - this.minPeek) / 2);
+    const minSpan = cardWidth + this.minPeek;
+
+    // Prefer height fit; only scale down for width once fold is capped (minSpan).
     const scale = Math.min(
       this.maxScale,
-      heightScale,
-      Math.max(1, widthScale) // never shrink for width; fold handles narrow layouts
+      availH / baseHeight,
+      availW / minSpan
+    );
+    if (!(scale > 0)) return;
+
+    const fold = Math.min(
+      maxFold,
+      Math.max(0, (baseWidth - availW / scale) / 2)
     );
 
     this.slots.style.setProperty('--slots-scale', String(scale));
-    // Match arena box to the visual (scaled) slots size — transform does not affect layout.
-    this.arena.style.height = `${baseHeight * scale}px`;
+    this.slots.style.setProperty('--fold', `${fold}px`);
   }
 }

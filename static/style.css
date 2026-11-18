@@ -1,8 +1,8 @@
 :root {
-  --card-width: 223px;
-  --card-height: 344px;
+  --card-width: calc(223px + 0px);
+  --card-height: calc(344px + 0px);
   --inline-pad: 5px;
-  --fold: max(0px, calc((var(--card-width) * 2 - (100vw - 2 * var(--inline-pad))) / 2));
+  --fold: 0px;
   --slots-scale: 1;
   --navy: #0f2537;
   --sky: #1e5f8a;
@@ -33,16 +33,18 @@ body {
   align-items: center;
   justify-content: center;
   width: 100%;
+  min-width: 320px;
   height: 100%;
   min-height: 100%;
   overflow-x: hidden;
 }
 
 body > header { flex-shrink: 0; flex-grow: 0; position: relative; width: 100%; height: 15px; }
-body > main { flex-shrink: 0; flex-grow: 0; position: relative; min-height: 0; }
+body > main { flex-shrink: 1; flex-grow: 1; position: relative; min-height: 0; width: 100%; }
 body > footer { flex-shrink: 0; flex-grow: 0; position: relative; width: 100%; height: 15px; }
 
 /* Top HUD & Scoreboard */
+/*
 .hud {
   width: 100%;
   max-width: 600px;
@@ -53,36 +55,38 @@ body > footer { flex-shrink: 0; flex-grow: 0; position: relative; width: 100%; h
   font-size: 1.15rem;
   margin-bottom: 6px;
 }
+*/
 
 .scoreboard {
   display: flex;
   justify-content: center;
   gap: 14px;
   font-size: 0.9rem;
-  background: #ffffff;
+  background-color: #fff;
   padding: 0.5rem 1rem;
   border-radius: 999px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
   margin: 0 auto 0;
   width: fit-content;
   position: absolute;
-  top: 0;
+  top: -15px;
   left: 0;
   right: 0;
   z-index: 555;
-  background-color: #fffd;
+  background-color: #fff;
   height: 30px;
   align-items: center;
 }
 
 .scoreboard > span:first-child + span { display: none; }
 
+/*
 .status {
   font-weight: 700;
   font-size: 0.95rem;
   color: var(--sky);
   min-height: 1.4em;
-}
+}*/
 
 #status-msg { display: none; }
 
@@ -122,7 +126,7 @@ body > footer { flex-shrink: 0; flex-grow: 0; position: relative; width: 100%; h
   justify-content: center;
   align-items: center;
   width: 100%;
-  overflow: hidden;
+  overflow-x: clip;
   padding-left: var(--inline-pad);
   padding-right: var(--inline-pad);
 }
@@ -330,11 +334,11 @@ body > footer { flex-shrink: 0; flex-grow: 0; position: relative; width: 100%; h
 }
 
 /* Bottom Controls */
-nav.controls {
+.controls {
   display: flex;
   justify-content: center;
   position: absolute;
-  bottom: 0;
+  bottom: -15px;
   left: 0;
   right: 0;
   height: 30px;
@@ -349,7 +353,7 @@ button {
   border-width: 2px;
   border-color: #e67e22dd;
   border-style: solid;
-  background-color: #e67e22dd;
+  background-color: #e67e22;
   color: #fff;
   font-size: 0.95rem;
   font-weight: 700;
@@ -409,36 +413,3 @@ button:focus-visible {
     display: flex;
   }
 }
-
-
-/* ==========================================
-   MOBILE OPTIMIZATION (< 768px) — ZERO JUMP
-   ========================================== */
-/*
-@media (max-width: 768px) {
-  body {
-    padding: 8px 10px 14px;
-    overflow-x: hidden;
-  }
-
-  .hud h1 {
-    display: none;
-  }
-
-  .arena .slot:nth-child(2) {
-    display: none;
-  }
-
-  .quartett-card {
-    transform: scale(1.22);
-    transform-origin: top center;
-    margin-bottom: 22mm;
-  }
-
-  .controls {
-    position: sticky;
-    bottom: 10px;
-    z-index: 20;
-  }
-}
-*/
